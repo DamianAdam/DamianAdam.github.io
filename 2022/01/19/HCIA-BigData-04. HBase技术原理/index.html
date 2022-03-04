@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/page_img/hcia.jpg">
 <meta property="article:published_time" content="2022-01-19T10:44:52.000Z">
-<meta property="article:modified_time" content="2022-03-04T13:37:30.024Z">
+<meta property="article:modified_time" content="2022-03-04T15:07:15.030Z">
 <meta property="article:author" content="Damian Adam">
 <meta property="article:tag" content="HCIA-BigData">
 <meta name="twitter:card" content="summary_large_image">
@@ -216,7 +216,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      4k 字
+      2.5k 字
     </span>
   
 
@@ -225,7 +225,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      34 分钟
+      21 分钟
     </span>
   
 
@@ -266,91 +266,12 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 小时前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <h2 id="02-HBase数据模型"><a href="#02-HBase数据模型" class="headerlink" title="02. HBase数据模型"></a>02. HBase数据模型</h2><h3 id="2-1-数据模型"><a href="#2-1-数据模型" class="headerlink" title="2.1 数据模型"></a>2.1 数据模型</h3><h4 id="2-1-1-HBase的数据模型概述"><a href="#2-1-1-HBase的数据模型概述" class="headerlink" title="2.1.1 HBase的数据模型概述"></a>2.1.1 HBase的数据模型概述</h4><ul>
-<li>与其他所有数据库一样，HBase所有的应用单元都是以数据表的形式进行存储的。</li>
-<li>表是由行和列构成的，所有的列是从属于某一个列族的。</li>
-<li>行列交叉的内容就是数据本身，通过行列交叉可以定位一个唯一的数据位置。</li>
-<li>数据本身是一段不可分割的字节数组。表的行键也是一段字节数组，所以任何东西都可以保存进去。</li>
-<li>HBase的表是按照行键来进行排序的，排序方式是针对字节的。</li>
-<li>所有表都必须由主键。</li>
-</ul>
-<h4 id="2-1-2-HBase表结构"><a href="#2-1-2-HBase表结构" class="headerlink" title="2.1.2 HBase表结构"></a>2.1.2 HBase表结构</h4><ul>
-<li>HBase是基于列式存储的数据库，列式存储的数据库也是采用表来组织数据的。</li>
-<li>HBase列式数据库的表有如下几个重要部分：<ul>
-<li>行：每个HBase表都由若干行组成，每一行都由一个唯一的行键Row Key来标识。</li>
-<li>列族：一张表被分组成许多列族Column Family，一个列族由多个列组成。</li>
-<li>列限定符：也就是平时所说的列。</li>
-<li>单元格：通过列族+列限定符+行键可以唯一确定一个单元格Cell。<ul>
-<li>HBase的Cell中存储的数据没有数据类型，因此Cell可以看作一个字节数组byte[]。</li>
-</ul>
-</li>
-<li>时间戳：每个单元格都保存着一份数据的多个版本，不同版本的数据通过时间戳进行区分。</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://test-1305290859.cos.ap-nanjing.myqcloud.com/img/HBase%E8%A1%A8%E7%A4%BA%E4%BE%8B.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>上图是为了理解而存在的，实际上HBase的表一般如下：<ul>
-<li>这张表里包含了contents和anchor两个列族。</li>
-<li>contents只有content:html一列以及com.cnn.www一行，但却有t3、t5、t6三个数据版本。</li>
-<li>anchor有anchor:aa.com和anchor:bb.com两列与com.cnn.www一行。<ul>
-<li>anchor:aa.com列com.cnn.www行的数据为CNN，时间戳为t9。</li>
-<li>anchor:bb.com列com.cnn.www行的数据为CNN.com，时间戳为t8。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://test-1305290859.cos.ap-nanjing.myqcloud.com/img/HBase%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E8%A7%86%E5%9B%BE.png" srcset="/img/loading.gif" lazyload></p>
-<ul>
-<li>对于这样的表结构，我们不难发现，如果要对其进行横向扩容（加一列），并不会影响原来的数据。因此HBase很好的支持了横向扩容。</li>
-</ul>
-<h3 id="2-2-存储模式"><a href="#2-2-存储模式" class="headerlink" title="2.2 存储模式"></a>2.2 存储模式</h3><ul>
-<li>对于数据库而言，我们一般认为存储方式有两种：行存储、列存储。</li>
-</ul>
-<h4 id="2-2-1-行存储"><a href="#2-2-1-行存储" class="headerlink" title="2.2.1 行存储"></a>2.2.1 行存储</h4><ul>
-<li>行存储是指数据按行存储在底层文件系统中，每一行会被分配固定的空间。</li>
-<li>包括传统的数据库、Excel表格等都属于行存储。</li>
-<li>行存储的优点：<ul>
-<li>有利于增加/修改整行记录等操作。</li>
-<li>有利于整行数据的读取操作。</li>
-</ul>
-</li>
-<li>行存储的缺点：单列查询时，会读取到一些不必要的数据。<ul>
-<li>行存储会先读取出整一行的数据，然后再把这一行中所需要的列的数据读取出来。</li>
-<li>因此行存储如果要读取单列数据，那么就会将所有行都读出来（等于整张表），然后再将所有行中这一列的数据提取出来，组成单列。</li>
-<li>所以说行存储在查询单列数据时，会读取到不必要的数据。</li>
-</ul>
-</li>
-</ul>
-<p><img src="https://test-1305290859.cos.ap-nanjing.myqcloud.com/img/%E8%A1%8C%E5%AD%98%E5%82%A8.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="2-2-2-列存储"><a href="#2-2-2-列存储" class="headerlink" title="2.2.2 列存储"></a>2.2.2 列存储</h4><ul>
-<li>相对于行存储而言，列存储是指数据以列为单位，存储在底层文件系统中。</li>
-<li>HBase采用的就是列存储模式。</li>
-<li>列存储的优点：有利于面向单列数据的读取/统计等操作。</li>
-<li>列存储的缺点：在读取整行数据时，需要进行多次I/O操作。</li>
-</ul>
-<p><img src="https://test-1305290859.cos.ap-nanjing.myqcloud.com/img/%E5%88%97%E5%AD%98%E5%82%A8.png" srcset="/img/loading.gif" lazyload></p>
-<h4 id="2-2-3-行列存储的区别分析"><a href="#2-2-3-行列存储的区别分析" class="headerlink" title="2.2.3 行列存储的区别分析"></a>2.2.3 行列存储的区别分析</h4><ul>
-<li>在整行或整列读取时：<ul>
-<li>行存储读取整列时会读到其他无用的数据。</li>
-<li>列存储读取整行时要进行多次IO操作。</li>
-</ul>
-</li>
-<li>表与数据的关系：<ul>
-<li>行存储需要先规定好表的结构，如表头标题、数据库字段名等；然后在进行数据的写入。</li>
-<li>如果行存储要添加一个字段，那么就需要推翻原始的表结构，才可以将新字段加入进去。</li>
-<li>而列存储则可以直接进行扩展，不会对原表有任何影响。</li>
-</ul>
-</li>
-<li>由于大数据的数据模式可能会随着数据量的增加而改变（简单理解就是可能随着数据量的增加，表的字段也会随之增加），因此HBase才采用列存储作为存储模式。</li>
-</ul>
-<h2 id="03-HBase体系架构"><a href="#03-HBase体系架构" class="headerlink" title="03. HBase体系架构"></a>03. HBase体系架构</h2><h3 id="3-1-HBase系统架构"><a href="#3-1-HBase系统架构" class="headerlink" title="3.1 HBase系统架构"></a>3.1 HBase系统架构</h3><ul>
+              <h2 id="03-HBase体系架构"><a href="#03-HBase体系架构" class="headerlink" title="03. HBase体系架构"></a>03. HBase体系架构</h2><h3 id="3-1-HBase系统架构"><a href="#3-1-HBase系统架构" class="headerlink" title="3.1 HBase系统架构"></a>3.1 HBase系统架构</h3><ul>
 <li>HBase中下层架构：<ul>
 <li>HBase所有操作都在内存中完成，最后一定要持久化到磁盘中，因此HBase底层的存储是HDFS的DN。（并且待处理的数据一般也是从DN中来的，即一般情况下，HBase的数据存储在HDFS中）</li>
 <li>HBase并不能直接与HDFS交互，而是需要通过文件系统客户端，所以HBase和HDFS之间存在着DFS Client。</li>
