@@ -1,0 +1,766 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpg">
+  <link rel="icon" href="/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Damian Adam">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="01. 安装MySQL MySQL的版本不要太高，这里选择MySQL 5.5。 在网上下载MySQL-client-5.5.59-1.el7.x86_64.rpm和MySQL-server-5.5.59-1.el7.x86_64.rpm文件，并将二者上传到&#x2F;usr&#x2F;local&#x2F;src&#x2F;mysql5.5目录下。  12345[root@master ~]# cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;[ro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BD环境部署03-Hive 1.2.2环境搭建">
+<meta property="og:url" content="http://example.com/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B203-Hive%201.2.2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="Adam&#39;s Blog">
+<meta property="og:description" content="01. 安装MySQL MySQL的版本不要太高，这里选择MySQL 5.5。 在网上下载MySQL-client-5.5.59-1.el7.x86_64.rpm和MySQL-server-5.5.59-1.el7.x86_64.rpm文件，并将二者上传到&#x2F;usr&#x2F;local&#x2F;src&#x2F;mysql5.5目录下。  12345[root@master ~]# cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;[ro">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/page_img/computer_room.jpg">
+<meta property="article:published_time" content="2022-01-20T11:35:10.000Z">
+<meta property="article:modified_time" content="2022-01-21T06:02:19.000Z">
+<meta property="article:author" content="Damian Adam">
+<meta property="article:tag" content="大数据环境部署">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/img/page_img/computer_room.jpg">
+  
+  
+  <title>BD环境部署03-Hive 1.2.2环境搭建 - Adam&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4/github-markdown.min.css" />
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hint.css@2/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.css" />
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Adam&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/page_img/hive.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="BD环境部署03-Hive 1.2.2环境搭建">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      Damian Adam
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-01-20 19:35" pubdate>
+        2022年1月20日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      9.6k 字
+    </span>
+  
+
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      81 分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">BD环境部署03-Hive 1.2.2环境搭建</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：1 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="01-安装MySQL"><a href="#01-安装MySQL" class="headerlink" title="01. 安装MySQL"></a>01. 安装MySQL</h2><ul>
+<li>MySQL的版本不要太高，这里选择MySQL 5.5。</li>
+<li>在网上下载MySQL-client-5.5.59-1.el7.x86_64.rpm和MySQL-server-5.5.59-1.el7.x86_64.rpm文件，并将二者上传到/usr/local/src/mysql5.5目录下。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><div class="code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd /usr/local/src/</span><br>[root@master src]<span class="hljs-comment"># mkdir mysql5.5</span><br>[root@master src]<span class="hljs-comment"># cd mysql5.5</span><br>[root@master mysql5.5]<span class="hljs-comment"># ls</span><br>MySQL-client-5.5.59-1.el7.x86_64.rpm  MySQL-server-5.5.59-1.el7.x86_64.rpm<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>检查系统中是否有已经安装的mysql或mariadb的包，有的话使用rpm -e或yum remove命令将其删除。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master mysql5.5]<span class="hljs-comment"># rpm -qa | grep -i mysql</span><br>[root@master mysql5.5]<span class="hljs-comment"># rpm -qa | grep -i mariadb</span><br>mariadb-libs-5.5.56-2.el7.x86_64<br>[root@master mysql5.5]<span class="hljs-comment"># yum remove -y mariadb*</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>安装服务器与客户端。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master mysql5.5]<span class="hljs-comment"># rpm -ivh --nodeps MySQL-server-5.5.59-1.el7.x86_64.rpm</span><br>[root@master mysql5.5]<span class="hljs-comment"># rpm -ivh --nodeps MySQL-client-5.5.59-1.el7.x86_64.rpm</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动与设置开机启动。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master mysql5.5]<span class="hljs-comment"># systemctl start mysql</span><br>[root@master mysql5.5]<span class="hljs-comment"># systemctl enable mysql</span><br>mysql.service is not a native service, redirecting to /sbin/chkconfig.<br>Executing /sbin/chkconfig mysql on<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>登录MySQL。（注意，现在是没有密码的，因此不要加-p选项）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master mysql5.5]<span class="hljs-comment"># mysql -u root</span><br>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection <span class="hljs-built_in">id</span> is 1<br>Server version: 5.5.59 MySQL Community Server (GPL)<br><br>Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.<br><br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br><br>Type <span class="hljs-string">&#x27;help;&#x27;</span> or <span class="hljs-string">&#x27;\h&#x27;</span> <span class="hljs-keyword">for</span> <span class="hljs-built_in">help</span>. Type <span class="hljs-string">&#x27;\c&#x27;</span> to clear the current input statement.<br><br>mysql&gt; <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>修改密码。（建议设为hadoop，这与下面Hive的配置文件有关）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; <span class="hljs-built_in">set</span> password=password(<span class="hljs-string">&#x27;hadoop&#x27;</span>);<br>Query OK, 0 rows affected (0.01 sec)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>开启master的远程登录权限。（必须开启，后面Hive需要连接MySQL）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; grant all privileges on *.* to <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;master&#x27;</span> identified by <span class="hljs-string">&#x27;hadoop&#x27;</span>;<br>Query OK, 0 rows affected (0.00 sec)<br><br>mysql&gt; flush privileges;<br>Query OK, 0 rows affected (0.00 sec)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>退出，完成安装。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">mysql&gt; <span class="hljs-built_in">exit</span>;<br>Bye<br></code></pre></td></tr></table></figure>
+
+<h2 id="02-准备MySQL的连接工具"><a href="#02-准备MySQL的连接工具" class="headerlink" title="02. 准备MySQL的连接工具"></a>02. 准备MySQL的连接工具</h2><ul>
+<li>从网上下载mysql-connector-java-5.1.44.tar.gz，并上传到/usr/local/src/目录下，然后解压。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd /usr/local/src/</span><br>[root@master src]<span class="hljs-comment"># ls | grep mysql-conn</span><br>mysql-connector-java-5.1.44.tar.gz<br>[root@master src]<span class="hljs-comment"># tar -zxvf mysql-connector-java-5.1.44.tar.gz</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>解压后进入mysql-connector-java-5.1.44目录，即可看到jar包。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master src]<span class="hljs-comment"># cd mysql-connector-java-5.1.44</span><br>[root@master mysql-connector-java-5.1.44]<span class="hljs-comment"># ls | grep mysql</span><br>mysql-connector-java-5.1.44-bin.jar<br></code></pre></td></tr></table></figure>
+
+<h2 id="03-安装Hive"><a href="#03-安装Hive" class="headerlink" title="03. 安装Hive"></a>03. 安装Hive</h2><ul>
+<li>从网上下载apache-hive-1.2.2-bin.tar.gz文件，并上传到/usr/local/src/目录下，然后解压。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd /usr/local/src/</span><br>[root@master src]<span class="hljs-comment"># ls | grep hive</span><br>apache-hive-1.2.2-bin.tar.gz<br>[root@master src]<span class="hljs-comment"># tar -zxvf apache-hive-1.2.2-bin.tar.gz </span><br>[root@master src]<span class="hljs-comment"># cd apache-hive-1.2.2-bin</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>进入conf目录，复制hive-env.sh.template为hive-env.sh，并创建hive-site.xml文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master apache-hive-1.2.2-bin]<span class="hljs-comment"># cd conf</span><br>[root@master conf]<span class="hljs-comment"># cp hive-env.sh.template hive-env.sh</span><br>[root@master conf]<span class="hljs-comment"># touch hive-site.xml</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>编辑hive-env.sh文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master conf]<span class="hljs-comment"># tail -n 4 hive-env.sh</span><br><span class="hljs-built_in">export</span> JAVA_HOME=/usr/local/src/jdk1.8.0_212                        <span class="hljs-comment"># Java路径</span><br><span class="hljs-built_in">export</span> HADOOP_HOME=/usr/local/src/hadoop-2.8.2                      <span class="hljs-comment"># Hadoop安装路径</span><br><span class="hljs-built_in">export</span> HIVE_HOME=/usr/local/src/apache-hive-1.2.2-bin               <span class="hljs-comment"># Hive安装路径</span><br><span class="hljs-built_in">export</span> HIVE_CONF_DIR=/usr/local/src/apache-hive-1.2.2-bin/conf      <span class="hljs-comment"># Hive配置文件路径</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>编辑hive-site.xml文件。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master conf]<span class="hljs-comment"># vim hive-site.xml </span><br>[root@master conf]<span class="hljs-comment"># cat hive-site.xml </span><br>&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> standalone=<span class="hljs-string">&quot;no&quot;</span>?&gt;<br>&lt;?xml-stylesheet <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;text/xsl&quot;</span> href=<span class="hljs-string">&quot;configuration.xsl&quot;</span>?&gt;<br>&lt;configuration&gt;<br>    &lt;property&gt;<br>        &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;<br>        &lt;value&gt;jdbc:mysql://master:3306/hive?createDatabaseIfNotExist=<span class="hljs-literal">true</span>&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;<br>        &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;<br>        &lt;value&gt;root&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;<br>        &lt;value&gt;hadoop&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;<br>        &lt;value&gt;/usr/local/src/apache-hive-1.2.2-bin/warehouse&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;hive.exec.scratchdir&lt;/name&gt;<br>        &lt;value&gt;/usr/local/src/apache-hive-1.2.2-bin/tmp&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;hive.querylog.location&lt;/name&gt;<br>        &lt;value&gt;/usr/local/src/apache-hive-1.2.2-bin/log&lt;/value&gt;<br>    &lt;/property&gt;<br>&lt;/configuration&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>配置环境变量。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># vim /etc/profile</span><br>[root@master ~]<span class="hljs-comment"># tail -n 3 /etc/profile</span><br><span class="hljs-comment">## HIVE_HOME</span><br><span class="hljs-built_in">export</span> HIVE_HOME=/usr/local/src/apache-hive-1.2.2-bin<br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$HIVE_HOME</span>/bin<br>[root@master ~]<span class="hljs-comment"># source /etc/profile</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在/usr/local/src/apache-hive-1.2.2-bin目录下创建文件夹。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd /usr/local/src/apache-hive-1.2.2-bin</span><br>[root@master apache-hive-1.2.2-bin]<span class="hljs-comment"># mkdir tmp</span><br>[root@master apache-hive-1.2.2-bin]<span class="hljs-comment"># mkdir log</span><br>[root@master apache-hive-1.2.2-bin]<span class="hljs-comment"># mkdir warehouse</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>将mysql-connector-java-5.1.44-bin.jar复制到$HIVE_HOME/lib目录下。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd /usr/local/src/mysql-connector-java-5.1.44</span><br>[root@master mysql-connector-java-5.1.44]<span class="hljs-comment"># cp mysql-connector-java-5.1.44-bin.jar $HIVE_HOME/lib</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="04-启动Hive"><a href="#04-启动Hive" class="headerlink" title="04. 启动Hive"></a>04. 启动Hive</h2><ul>
+<li>启动Hadoop。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@localhost ~]<span class="hljs-comment"># cd $HADOOP_HOME </span><br>[root@localhost hadoop-2.8.2]<span class="hljs-comment"># sbin/start-all.sh</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动Hive。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs b">[root@localhost hadoop-2.8.2]# hive<br><br>Logging initialized using configuration in jar:file:/usr/local/src/apache-hive-1.2.2-bin/lib/hive-common-1.2.2.jar!/hive-log4j.properties<br>hive&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="05-使用元数据服务的方式访问Hive"><a href="#05-使用元数据服务的方式访问Hive" class="headerlink" title="05. 使用元数据服务的方式访问Hive"></a>05. 使用元数据服务的方式访问Hive</h2><ul>
+<li>先进入MySQL查看一下是否存在hive数据库，如果有的话先将其删除。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs ba">[root@master apache-hive-1.2.2-bin]# mysql -u root -p<br>Enter password: <br>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 27<br>Server version: 5.5.59 MySQL Community Server (GPL)<br><br>Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.<br><br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br><br>Type &#x27;help;&#x27; or &#x27;\h&#x27; for help. Type &#x27;\c&#x27; to clear the current input statement.<br><br>mysql&gt; show databases;<br>+--------------------+<br>| Database           |<br>+--------------------+<br>| information_schema |<br>| hive               |<br>| mysql              |<br>| performance_schema |<br>| test               |<br>+--------------------+<br>5 rows in set (0.03 sec)<br><br>mysql&gt; drop database hive;<br>Query OK, 53 rows affected (0.17 sec)<br><br>mysql&gt; exit;<br>Bye<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>初始化元数据。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># schematool -initSchema -dbType mysql -verbose</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在$HIVE_HOME/conf/hive-site.xml中添加以下配置信息。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd $HIVE_HOME/conf/</span><br>[root@master conf]<span class="hljs-comment"># vim hive-site.xml </span><br>[root@master conf]<span class="hljs-comment"># cat hive-site.xml</span><br>&lt;configuration&gt;<br>    &lt;property&gt;<br>        &lt;name&gt;hive.metastore.uris&lt;/name&gt;<br>        &lt;value&gt;thrift://master:9083&lt;/value&gt;<br>    &lt;/property&gt;<br>&lt;/configuration&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动metastore，启动后该窗口不能再进行其他操作。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># hive --service metastore</span><br>Starting Hive Metastore Server<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打开一个新的Shell窗口，启动Hive。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># hive</span><br><br>Logging initialized using configuration <span class="hljs-keyword">in</span> jar:file:/usr/local/src/apache-hive-1.2.2-bin/lib/hive-common-1.2.2.jar!/hive-log4j.properties<br>hive&gt; <br></code></pre></td></tr></table></figure>
+
+<h2 id="06-使用JDBC方式访问Hive"><a href="#06-使用JDBC方式访问Hive" class="headerlink" title="06. 使用JDBC方式访问Hive"></a>06. 使用JDBC方式访问Hive</h2><ul>
+<li>在$HIVE_HOME/conf/hive-site.xml中添加以下配置信息。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd $HIVE_HOME/conf/</span><br>[root@master conf]<span class="hljs-comment"># vim hive-site.xml </span><br>[root@master conf]<span class="hljs-comment"># cat hive-site.xml</span><br>&lt;configuration&gt;<br>    &lt;property&gt;<br>        &lt;name&gt;hive.server2.transport.mode&lt;/name&gt;<br>        &lt;value&gt;binary&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;hive.server2.thrift.bind.host&lt;/name&gt;<br>        &lt;value&gt;master&lt;/value&gt;<br>    &lt;/property&gt;<br><br>    &lt;property&gt;<br>        &lt;name&gt;hive.server2.thrift.port&lt;/name&gt;<br>        &lt;value&gt;10000&lt;/value&gt;<br>    &lt;/property&gt;<br>&lt;/configuration&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在$HADOOP_HIME/etc/hadoop/core-site.xml中添加以下配置。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd $HADOOP_HIME/etc/hadoop/</span><br>[root@master hadoop]<span class="hljs-comment"># vim core-site.xml</span><br>[root@master hadoop]<span class="hljs-comment"># cat core-site.xml</span><br>&lt;configuration&gt;<br>    &lt;property&gt;<br>        &lt;name&gt;hadoop.proxyuser.root.hosts&lt;/name&gt;<br>        &lt;value&gt;*&lt;/value&gt;<br>    &lt;/property&gt;<br>    <br>    &lt;property&gt;<br>        &lt;name&gt;hadoop.proxyuser.root.groups&lt;/name&gt;<br>        &lt;value&gt;*&lt;/value&gt;<br>    &lt;/property&gt;<br>&lt;/configuration&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>重启master。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># init 6</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动Hadoop</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># cd $HADOOP_HOME </span><br>[root@master hadoop-2.8.2]<span class="hljs-comment"># sbin/start-all.sh</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动元数据服务，启动后该窗口不能再进行其他操作。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># hive --service metastore &amp;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打开一个新的Shell窗口，启动hiveserver2。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># hive --service hiveserver2 &amp;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动beeline客户端。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master ~]<span class="hljs-comment"># beeline -u jdbc:hive2://master:10000 -n root</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="07-使用DataGrip连接Hive"><a href="#07-使用DataGrip连接Hive" class="headerlink" title="07. 使用DataGrip连接Hive"></a>07. 使用DataGrip连接Hive</h2><ul>
+<li>先进入beeline，查看hive-jdbc的版本，完成后使用Ctrl + C退出。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">[root@master hadoop-2.8.2]<span class="hljs-comment"># beeline -u jdbc:hive2://master:10000 -n root</span><br>Connecting to jdbc:hive2://master:10000<br>Connected to: Apache Hive (version 1.2.2)<br>Driver: Hive JDBC (version 1.2.2)<br>Transaction isolation: TRANSACTION_REPEATABLE_READ<br>Beeline version 1.2.2 by Apache Hive<br>0: jdbc:hive2://master:10000&gt; <br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>随便用IDEA打开一个Maven项目，在pom.xml中添加依赖。（添加完成后可以自行决定是否删除，主要是为了加载jar包）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs bash">&lt;dependency&gt;<br>    &lt;groupId&gt;org.apache.hive&lt;/groupId&gt;<br>    &lt;artifactId&gt;hive-jdbc&lt;/artifactId&gt;<br>    &lt;version&gt;1.2.2&lt;/version&gt;<br>&lt;/dependency&gt;<br>&lt;dependency&gt;<br>    &lt;groupId&gt;org.apache.hadoop&lt;/groupId&gt;<br>    &lt;artifactId&gt;hadoop-client&lt;/artifactId&gt;<br>    &lt;version&gt;2.8.2&lt;/version&gt;<br>&lt;/dependency&gt;<br>&lt;dependency&gt;<br>    &lt;groupId&gt;com.google.protobuf&lt;/groupId&gt;<br>    &lt;artifactId&gt;protobuf-java&lt;/artifactId&gt;<br>    &lt;version&gt;2.4.1&lt;/version&gt;<br>&lt;/dependency&gt;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>使用Everything工具找出以下jar包，将其复制到一个目录下。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs list">hive-common-1.2.2.jar<br>hive-service-1.2.2.jar<br>hadoop-common-2.8.2.jar<br>commons-httpclient-3.1.jar<br>commons-logging-1.2.jar<br>curator-client-2.13.0.jar<br>curator-framework-2.6.0.jar<br>hadoop-auth-2.8.2<br>hive-metastore-1.2.2.jar<br>httpclient-4.4.jar<br>httpcore-4.4.jar<br>zookeeper-3.4.6.jar<br>libthrift-0.9.2.jar<br>hive-jdbc-1.2.2.jar<br>guava-14.0.1.jar<br>hive-serde-1.2.2.jar<br>slf4j-api-1.7.5.jar<br>protobuf-java-2.4.1.jar<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>打开DataGrip，点击File &gt;&gt; New &gt;&gt; Data Source &gt;&gt; Apache Hive。</li>
+<li>点击Genter中Driver的Apache Hive，在弹出页面页面中的Driver Files将刚刚收集的所有jar包导进来，点击Apply，点击OK。</li>
+<li>此时会生成一个连接，右键Properties配置Hive的相关信息即可连接成功。</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/01/21/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B204-HBase%200.98.24%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BD环境部署04-HBase 0.98.24环境搭建</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B202-Zookeeper%203.4.10%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">
+                        <span class="hidden-mobile">BD环境部署02-Zookeeper 3.4.10环境搭建</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"cYU8iO6vtHfrvsmbGMk6jGbh-gzGzoHsz","appKey":"BC0IYOFfH9fJLGtnqAVWJoe5","path":"window.location.pathname","placeholder":"留下你精彩的评论吧~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"visitor":true,"avatarForce":true},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-x-md">
+    <div class="container custom post-custom mx-auto">
+      <img src="https://octodex.github.com/images/jetpacktocat.png" srcset="/img/loading.gif" lazyload class="rounded mx-auto d-block mt-5" style="width:150px; height:150px;">
+    </div>
+  </div>
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  
+    <script  src="https://cdn.jsdelivr.net/npm/tocbot@4/dist/tocbot.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3/dist/jquery.fancybox.min.js" ></script>
+  
+  
+    <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4/anchor.min.js" ></script>
+  
+  
+    <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js" ></script>
+  
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+  
+
+  
+    <!-- MathJax -->
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        loader: {
+          load: ['ui/lazy']
+        },
+        options: {
+          renderActions: {
+            findScript: [10, doc => {
+              document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+                const display = !!node.type.match(/; *mode=display/);
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+                const text = document.createTextNode('');
+                node.parentNode.replaceChild(text, node);
+                math.start = { node: text, delim: '', n: 0 };
+                math.end = { node: text, delim: '', n: 0 };
+                doc.math.push(math);
+              });
+            }, '', false],
+            insertedScript: [200, () => {
+              document.querySelectorAll('mjx-container').forEach(node => {
+                let target = node.parentNode;
+                if (target.nodeName.toLowerCase() === 'li') {
+                  target.parentNode.classList.add('has-jax');
+                }
+              });
+            }, '', false]
+          }
+        }
+      };
+    </script>
+
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" ></script>
+
+  
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js" ></script>
+  <script>
+    if (window.mermaid) {
+      mermaid.initialize({"theme":"default"});
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":170,"height":340},"mobile":{"show":true},"log":false});</script></body>
+</html>

@@ -1,0 +1,726 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpg">
+  <link rel="icon" href="/img/avatar.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Damian Adam">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="用于记录学习计算机四大件和大数据的过程">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Adam&#39;s Blog">
+<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:site_name" content="Adam&#39;s Blog">
+<meta property="og:description" content="用于记录学习计算机四大件和大数据的过程">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Damian Adam">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  <title>Adam&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.14","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.1"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Adam&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                友链
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/bg/bg.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="我们只信奉上帝，其他人都必须携数据而来。">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/21/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B200-%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83%E5%81%9C%E5%90%AF%E6%80%BB%E6%B1%87/" target="_blank">
+          <img src="/img/page_img/computer_room.jpg" srcset="/img/loading.gif" lazyload alt="BD环境部署00-集群环境停启总汇">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/21/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B200-%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83%E5%81%9C%E5%90%AF%E6%80%BB%E6%B1%87/" target="_blank">
+          BD环境部署00-集群环境停启总汇
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/21/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B200-%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83%E5%81%9C%E5%90%AF%E6%80%BB%E6%B1%87/" target="_blank">
+          
+          所有组件都请按照正常步骤启动或停止，不要进程还开着就强制给节点下电，这样可能引起未知错误。  Hadoop启动 在master上操作。 切换到$HADOOP_HOME目录下。  1[root@master ~]# cd $HADOOP_HOME    执行集群启动脚本。  1[root@master hadoop-2.8.2]# sbin&#x2F;start-all.sh  查看状态 在master、sl
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-21 18:24" pubdate>
+              2022-01-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/21/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B204-HBase%200.98.24%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          <img src="/img/page_img/computer_room.jpg" srcset="/img/loading.gif" lazyload alt="BD环境部署04-HBase 0.98.24环境搭建">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/21/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B204-HBase%200.98.24%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          BD环境部署04-HBase 0.98.24环境搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/21/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B204-HBase%200.98.24%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          
+          下载hbase-0.98.24-hadoop2-bin.tar.gz并上传到&#x2F;usr&#x2F;local&#x2F;src目录下，然后解压。  1234[root@master ~]# cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;[root@master src]# ls | grep hbhbase-0.98.24-hadoop2-bin.tar.gz[root@master src]# tar -zxvf hbase
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-21 18:22" pubdate>
+              2022-01-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B203-Hive%201.2.2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          <img src="/img/page_img/computer_room.jpg" srcset="/img/loading.gif" lazyload alt="BD环境部署03-Hive 1.2.2环境搭建">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B203-Hive%201.2.2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          BD环境部署03-Hive 1.2.2环境搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B203-Hive%201.2.2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          
+          01. 安装MySQL MySQL的版本不要太高，这里选择MySQL 5.5。 在网上下载MySQL-client-5.5.59-1.el7.x86_64.rpm和MySQL-server-5.5.59-1.el7.x86_64.rpm文件，并将二者上传到&#x2F;usr&#x2F;local&#x2F;src&#x2F;mysql5.5目录下。  12345[root@master ~]# cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;[ro
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-20 19:35" pubdate>
+              2022-01-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B202-Zookeeper%203.4.10%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          <img src="/img/page_img/computer_room.jpg" srcset="/img/loading.gif" lazyload alt="BD环境部署02-Zookeeper 3.4.10环境搭建">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B202-Zookeeper%203.4.10%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          BD环境部署02-Zookeeper 3.4.10环境搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/20/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B202-Zookeeper%203.4.10%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          
+          下载Zookeeper 3.4.10并上传到&#x2F;usr&#x2F;local&#x2F;src&#x2F;目录下，并解压。  1234[root@master ~]# cd &#x2F;usr&#x2F;local&#x2F;src&#x2F;[root@master src]# ls | grep zoozookeeper-3.4.10.tar.gz[root@master src]# tar -zxvf zookeeper-3.4.10.tar.gz   进入z
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-20 17:57" pubdate>
+              2022-01-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/19/HCIA-BigData-04.%20HBase%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86/" target="_blank">
+          <img src="/img/page_img/hcia.jpg" srcset="/img/loading.gif" lazyload alt="HCIA-BigData-04. HBase技术原理">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/19/HCIA-BigData-04.%20HBase%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86/" target="_blank">
+          HCIA-BigData-04. HBase技术原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/19/HCIA-BigData-04.%20HBase%E6%8A%80%E6%9C%AF%E5%8E%9F%E7%90%86/" target="_blank">
+          
+          该篇文章内容包括：HBase 基本介绍、HBase 数据模型、HBase 体系架构、HBase 关键流程
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-19 18:44" pubdate>
+              2022-01-19
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/HCIA-BigData/">HCIA-BigData</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HCIA-BigData/">HCIA-BigData</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/17/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B201-Hadoop%202.8.2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          <img src="/img/page_img/computer_room.jpg" srcset="/img/loading.gif" lazyload alt="BD环境部署01-Hadoop 2.8.2环境搭建">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/17/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B201-Hadoop%202.8.2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          BD环境部署01-Hadoop 2.8.2环境搭建
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/17/BD%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B201-Hadoop%202.8.2%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" target="_blank">
+          
+          01. 虚拟机准备1.1 节点规划 Linux发行版：CentOS 7 最小化安装。  用户：root；密码：000000。  节点规划：3台。  主节点：master。  从节点：slave1、slave2。    配置：  内存：至少2G。 硬盘：至少50G。   网络模式：NAT。   1.2 安装前的准备 安装epel-release、net-tools、vim。（master、slave
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-17 14:03" pubdate>
+              2022-01-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2/">大数据环境部署</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2022/01/16/Hexo%20%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" target="_blank">
+          <img src="/img/bg/post_default_img.png" srcset="/img/loading.gif" lazyload alt="Hexo 博客使用技巧">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2022/01/16/Hexo%20%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" target="_blank">
+          Hexo 博客使用技巧
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2022/01/16/Hexo%20%E5%8D%9A%E5%AE%A2%E4%BD%BF%E7%94%A8%E6%8A%80%E5%B7%A7/" target="_blank">
+          
+          该篇文章内容包括：Hexo + GitHub 搭建个人博客、更换 Hexo 个人博客的主题、使用 Hexo 发表文章、Hexo 引入 live2d 卡通形象
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-16 13:21" pubdate>
+              2022-01-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%BB%BA%E7%AB%99%E6%8A%80%E5%B7%A7/">建站技巧</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Hexo%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F/">Hexo使用方式</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- 不蒜子统计PV -->
+        <span id="busuanzi_container_site_pv" style="display: none">
+            总访问量 
+            <span id="busuanzi_value_site_pv"></span>
+             次
+          </span>
+      
+      
+        <!-- 不蒜子统计UV -->
+        <span id="busuanzi_container_site_uv" style="display: none">
+            总访客数 
+            <span id="busuanzi_value_site_uv"></span>
+             人
+          </span>
+      
+    
+  </div>
+
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+        typing(title);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":170,"height":340},"mobile":{"show":true},"log":false});</script></body>
+</html>
