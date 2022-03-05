@@ -216,17 +216,17 @@
   
     
     <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://hexo.fluid-dev.com/docs/" class="card-body hover-with-bg" target="_blank" rel="noopener">
+      <a href="http://tk-edu.com/" class="card-body hover-with-bg" target="_blank" rel="noopener">
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Docs"
+              <img src="/img/link/tkedu_logo.jpg" srcset="/img/loading.gif" lazyload alt="上海腾科教育"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
           <div class="link-text">
-            <div class="link-title">Fluid Docs</div>
-            <div class="link-intro">主题使用指南</div>
+            <div class="link-title">上海腾科教育</div>
+            <div class="link-intro">ICT梦开始的地方</div>
           </div>
         </div>
       </a>
@@ -234,17 +234,17 @@
   
     
     <div class="card col-lg-4 col-md-6 col-sm-12">
-      <a href="https://github.com/fluid-dev/hexo-theme-fluid" class="card-body hover-with-bg" target="_blank" rel="noopener">
+      <a href="http://www.atguigu.com/" class="card-body hover-with-bg" target="_blank" rel="noopener">
         <div class="card-content">
           
             <div class="link-avatar my-auto">
-              <img src="/img/favicon.png" srcset="/img/loading.gif" lazyload alt="Fluid Repo"
+              <img src="/img/link/atguigu_logo.jpg" srcset="/img/loading.gif" lazyload alt="尚硅谷"
                    onerror="this.onerror=null; this.src=this.srcset='/img/avatar.png'"/>
             </div>
           
           <div class="link-text">
-            <div class="link-title">Fluid Repo</div>
-            <div class="link-intro">主题 GitHub 仓库</div>
+            <div class="link-title">尚硅谷</div>
+            <div class="link-intro">让天下没有难学的技术</div>
           </div>
         </div>
       </a>
@@ -253,7 +253,39 @@
 </div>
 
 
+  <!-- Custom -->
+  <div class="custom mx-auto">
+    <hr><p>在下方留言申请加入我的友链，按如下格式提供信息：</p> <ul> <li>博客名：Damian Adam</li> <li>简介：大数据菜鸟一名~</li> <li>链接：<a target="_blank" rel="noopener" href="https://blog.xxyzy.tk/">https://blog.xxyzy.tk/</a></li> <li>头像：<a target="_blank" rel="noopener" href="https://blog.xxyzy.tk/img/avatar.jpg">https://blog.xxyzy.tk/img/avatar.jpg</a></li> </ul> <br><p>两个商业友链说明：腾科教育（博主本人就是腾科的学员）和尚硅谷（博主也是尚硅谷的白嫖怪）都是十分优秀IT培训机构，博主推荐仅供参考；可以自行点击友链咨询，本人不参与任何报班代理等商业行为。</p> <ul> <li>上海腾科教育：提供VMware、Oracle、Huawei、Cisco、Red Hat等一些列认证培训业务</li> <li>尚硅谷：一家在Java和大数据方面很优秀的机构，可以白嫖很多优秀的资源，比如康师傅的Java、海哥的大数据！</li> </ul>
+  </div>
 
+
+
+  <!-- Comments -->
+  <article class="comments" id="comments" lazyload>
+    
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"cYU8iO6vtHfrvsmbGMk6jGbh-gzGzoHsz","appKey":"BC0IYOFfH9fJLGtnqAVWJoe5","path":"window.location.pathname","placeholder":"留下你精彩的评论吧~","avatar":"retro","meta":["nick","mail","link"],"requiredFields":["nick","mail"],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"visitor":true,"avatarForce":true},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          Fluid.plugins.initFancyBox('#valine .vcontent img:not(.vemoji)');
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
 
 
               </div>
