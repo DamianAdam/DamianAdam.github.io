@@ -4,13 +4,25 @@
   
   
   <entry>
-    <title></title>
-    <link href="/2023/01/10/SQL1%20%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%88%97/"/>
-    <url>/2023/01/10/SQL1%20%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%88%97/</url>
+    <title>SQL1 查询所有列</title>
+    <link href="/2023/01/05/SQL1%20%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%88%97/"/>
+    <url>/2023/01/05/SQL1%20%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%88%97/</url>
     
     <content type="html"><![CDATA[<h2 id="题目与解题思路"><a href="#题目与解题思路" class="headerlink" title="题目与解题思路"></a>题目与解题思路</h2><ul><li>SQL1 查询所有列：<a href="https://www.nowcoder.com/practice/f9f82607cac44099a77154a80266234a?tpId=199&tqId=1971219&ru=/exam/oj&qru=/ta/sql-quick-study/question-ranking&sourceUrl=/exam/oj?page=1&tab=SQL%25E7%25AF%2587&topicId=199">题目连接</a>。</li><li>思路一：使用通配符<code>*</code>代替所有字段名。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_profile;<br></code></pre></td></tr></table></figure></li><li>解题思路二：将所有的字段名都列出来。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> id, device_id, gender, age, university, province<br><span class="hljs-keyword">FROM</span> user_profile;<br></code></pre></td></tr></table></figure></li></ul><h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul><li>思路二存在的问题：字段的先后顺序可以自行定制，查询较为灵活（优点）；但是当表中字段很多时，书写很麻烦。</li><li>思路一存在的问题：<ul><li><strong>优点</strong>：相较于思路二，思路一不管表中有多少个字段，书写都十分快捷。</li><li><strong>缺点1（灵活度上考虑）</strong>：查询结果中字段的先后顺序与表结构完全一致，查询不灵活。</li><li><strong>缺点2（权限上考虑）</strong>：对于生产环境的宽表而言，可能存在敏感字段，你没权限读取，此时使用<code>SELECT *</code>就会出现权限问题。</li><li><strong>缺点3（业务上考虑）</strong>：假设一个场景，表T被A，B两个功能使用，两个功能查询表T用的都是<code>SELECT *</code>。某天PM决定改一下B功能，经过一番商议之后，发现此功能必须得在原有的表上加一个字段。那么问题就来了，加了字段后A功能某名奇妙的也加了个字段，并且没有任何用处。</li><li><strong>缺点4（服务器上考虑）</strong>：当<code>SELECT *</code>提交给后端数据库服务器运行时，DMBS会去找到表结构，然后将表中的所有字段全部解析出来，最后将SQL语句改写成思路二的形式。也就是说，DataBase Client向Server提交的是<code>SELECT * FROM user_profile;</code>，但Server最后执行的依旧是<code>SELECT id, device_id, gender, age, university, province FROM user_profile;</code>。</li><li><strong>缺点5（I/O考虑）</strong>：结合缺点3的场景，其实实际生产环境中大部分业务场景都不需要table中的所有column，只需要指定的几个即可。此时我们假设新增的columnA中存储了大量的文本数据，那功能A并不需要这个columnA，但是由于功能A中写的是<code>SELECT *</code>，所以SERVER还是会把columnA字段中所有value全部返回过来，这无疑会消耗大量的I/O资源和网络带宽。</li><li><strong>缺点6（框架层面考虑）</strong>：对于一些ORM框架而言，<code>SELECT *</code>会按照Column1、Column2、……、ColumnN这也的顺序进行映射，那此时比如在Column3和Column4中间新插入一个Column，那么ORM在<code>SELECT *</code>时就会出现一些映射上的安全问题。</li><li><strong>缺点7（效率上）</strong>：<code>SELECT *</code>会失去MySQL优化器“覆盖索引”策略优化的可能性。<ul><li>SELECT * 杜绝了覆盖索引的可能性，而基于MySQL优化器的“覆盖索引”策略又是速度极快，效率极高，业界极为推荐的查询优化方式。</li><li>例如，有一个表为t(a,b,c,d,e,f)，其中，a为主键，b列有索引。那么，在磁盘上有两棵 B+ 树，即聚集索引和辅助索引（包括单列索引、联合索引），分别保存(a,b,c,d,e,f)和(a,b)，如果查询条件中where条件可以通过b列的索引过滤掉一部分记录，查询就会先走辅助索引，如果用户只需要a列和b列的数据，直接通过辅助索引就可以知道用户查询的数据。</li><li>如果用户使用<code>SELECT *</code>，获取了不需要的数据，则首先通过辅助索引过滤数据，然后再通过聚集索引获取所有的列，这就多了一次B+树查询，速度必然会慢很多。</li><li>由于辅助索引的数据比聚集索引少很多，很多情况下，通过辅助索引进行覆盖索引（通过索引就能获取用户需要的所有列），都不需要读磁盘，直接从内存取，而聚集索引很可能数据在磁盘（外存）中（取决于buffer pool的大小和命中率），这种情况下，一个是内存读，一个是磁盘读，速度差异就很显著了，几乎是数量级的差异。</li></ul></li></ul></li></ul><p><img src="https://img-blog.csdnimg.cn/14be2d367e554b37bd9a167b51f14487.png#pic_center" alt="在这里插入图片描述"></p>]]></content>
     
     
+    <categories>
+      
+      <category>数据分析</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>SQL刷题</tag>
+      
+    </tags>
     
   </entry>
   
