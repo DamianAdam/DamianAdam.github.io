@@ -16,16 +16,16 @@
   <meta name="author" content="Damian Adam">
   <meta name="keywords" content="">
   
-    <meta name="description" content="题目与解题思路 SQL1 查询所有列：题目连接。 思路一：使用通配符*代替所有字段名。1SELECT * FROM user_profile; 解题思路二：将所有的字段名都列出来。12SELECT id, device_id, gender, age, university, provinceFROM user_profile; 问题分析 思路二存在的问题：字段的先后顺序可以自行定制，查询较为灵活">
+    <meta name="description" content="题目与解题思路 SQL1 查询所有列：题目连接。 思路一：使用通配符*代替所有字段名。1SELECT * FROM user_profile; 解题思路二：将所有的字段名都列出来。12SELECT id, device_id, gender, age, university, provinceFROM user_profile;  问题分析 思路二存在的问题：字段的先后顺序可以自行定制，查询较为灵">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Adam&#39;s Blog">
 <meta property="og:url" content="http://example.com/2023/01/10/SQL1%20%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%88%97/index.html">
 <meta property="og:site_name" content="Adam&#39;s Blog">
-<meta property="og:description" content="题目与解题思路 SQL1 查询所有列：题目连接。 思路一：使用通配符*代替所有字段名。1SELECT * FROM user_profile; 解题思路二：将所有的字段名都列出来。12SELECT id, device_id, gender, age, university, provinceFROM user_profile; 问题分析 思路二存在的问题：字段的先后顺序可以自行定制，查询较为灵活">
+<meta property="og:description" content="题目与解题思路 SQL1 查询所有列：题目连接。 思路一：使用通配符*代替所有字段名。1SELECT * FROM user_profile; 解题思路二：将所有的字段名都列出来。12SELECT id, device_id, gender, age, university, provinceFROM user_profile;  问题分析 思路二存在的问题：字段的先后顺序可以自行定制，查询较为灵">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/14be2d367e554b37bd9a167b51f14487.png#pic_center">
 <meta property="article:published_time" content="2023-01-10T13:36:54.619Z">
-<meta property="article:modified_time" content="2023-01-10T14:37:15.156Z">
+<meta property="article:modified_time" content="2023-01-10T14:43:49.880Z">
 <meta property="article:author" content="Damian Adam">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/14be2d367e554b37bd9a167b51f14487.png#pic_center">
@@ -304,7 +304,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：几秒前
+                    本文最后更新于：1 个月前
                   
                 
               </p>
@@ -315,8 +315,9 @@
                 <h2 id="题目与解题思路"><a href="#题目与解题思路" class="headerlink" title="题目与解题思路"></a>题目与解题思路</h2><ul>
 <li>SQL1 查询所有列：<a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/f9f82607cac44099a77154a80266234a?tpId=199&tqId=1971219&ru=/exam/oj&qru=/ta/sql-quick-study/question-ranking&sourceUrl=/exam/oj?page=1&tab=SQL%25E7%25AF%2587&topicId=199">题目连接</a>。</li>
 <li>思路一：使用通配符<code>*</code>代替所有字段名。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">FROM</span> user_profile;<br></code></pre></td></tr></table></figure></li>
-<li>解题思路二：将所有的字段名都列出来。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> id, device_id, gender, age, university, province<br><span class="hljs-keyword">FROM</span> user_profile;<br></code></pre></td></tr></table></figure>
-<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2></li>
+<li>解题思路二：将所有的字段名都列出来。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> id, device_id, gender, age, university, province<br><span class="hljs-keyword">FROM</span> user_profile;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><ul>
 <li>思路二存在的问题：字段的先后顺序可以自行定制，查询较为灵活（优点）；但是当表中字段很多时，书写很麻烦。</li>
 <li>思路一存在的问题：<ul>
 <li><strong>优点</strong>：相较于思路二，思路一不管表中有多少个字段，书写都十分快捷。</li>
